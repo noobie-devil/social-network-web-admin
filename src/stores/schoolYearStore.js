@@ -21,14 +21,19 @@ const useSchoolYearStore = defineStore('schoolYearStore', () => {
             // _order: sortBy[0].order,
             page: page,
             limit: Math.max(itemsPerPage, 0),
-            search
+            search,
         }
 
-        const { error: err, data: { data: { enrollmentYears, totalCount } } } = await GET(path, { params })
+        const {
+            error: err,
+            data: {
+                data: { enrollmentYears, totalCount },
+            },
+        } = await GET(path, { params })
 
         if (err) {
-            error.value = err.message
-            toastError(err.message)
+            error.value = err
+            toastError(err)
         } else {
             error.value = null
             schoolYears.value = enrollmentYears
@@ -43,8 +48,8 @@ const useSchoolYearStore = defineStore('schoolYearStore', () => {
         const { error: err, data } = await POST(path, item)
 
         if (err) {
-            error.value = err.message
-            toastError(err.message)
+            error.value = err
+            toastError(err)
         } else {
             toastSuccess('Create new school year successfully')
             error.value = null
@@ -60,12 +65,12 @@ const useSchoolYearStore = defineStore('schoolYearStore', () => {
         loading.value = true
         const { error: err, data } = await PUT(`${path}/${item._id}`, {
             name: item.name,
-            startYear: +item.startYear
+            startYear: +item.startYear,
         })
 
         if (err) {
-            error.value = err.message
-            toastError(err.message)
+            error.value = err
+            toastError(err)
         } else {
             toastSuccess('Edit school year successfully')
             error.value = null
@@ -88,8 +93,8 @@ const useSchoolYearStore = defineStore('schoolYearStore', () => {
         const { error: err } = await DELETE(`${path}/${item._id}`)
 
         if (err) {
-            error.value = err.message
-            toastError(err.message)
+            error.value = err
+            toastError(err)
         } else {
             toastSuccess('Delete school year successfully')
             error.value = null
@@ -102,7 +107,7 @@ const useSchoolYearStore = defineStore('schoolYearStore', () => {
     }
 
     const schoolYearNames = computed(() => {
-        return schoolYears.value.map(it => it.name)
+        return schoolYears.value.map((it) => it.name)
     })
 
     return {

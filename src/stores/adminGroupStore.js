@@ -22,14 +22,19 @@ const useAdminGroupStore = defineStore('adminGroupStore', () => {
             // _order: sortBy[0].order,
             page: page,
             limit: Math.max(itemsPerPage, 0),
-            search
+            search,
         }
 
-        const { error: err, data: { data: { groups: _groups, totalCount } } } = await GET(path, { params })
+        const {
+            error: err,
+            data: {
+                data: { groups: _groups, totalCount },
+            },
+        } = await GET(path, { params })
 
         if (err) {
-            error.value = err.message
-            toastError(err.message)
+            error.value = err
+            toastError(err)
         } else {
             error.value = null
             adminGroups.value = _groups
@@ -44,8 +49,8 @@ const useAdminGroupStore = defineStore('adminGroupStore', () => {
         const { error: err, data } = await POST(path, item)
 
         if (err) {
-            error.value = err.message
-            toastError(err.message)
+            error.value = err
+            toastError(err)
         } else {
             toastSuccess('Create new admin group successfully')
             error.value = null
@@ -64,8 +69,8 @@ const useAdminGroupStore = defineStore('adminGroupStore', () => {
         })
 
         if (err) {
-            error.value = err.message
-            toastError(err.message)
+            error.value = err
+            toastError(err)
         } else {
             toastSuccess('Edit admin group successfully')
             error.value = null
@@ -88,8 +93,8 @@ const useAdminGroupStore = defineStore('adminGroupStore', () => {
         const { error: err } = await DELETE(`${path}/${item._id}`)
 
         if (err) {
-            error.value = err.message
-            toastError(err.message)
+            error.value = err
+            toastError(err)
         } else {
             toastSuccess('Delete admin group successfully')
             error.value = null
@@ -102,7 +107,7 @@ const useAdminGroupStore = defineStore('adminGroupStore', () => {
     }
 
     const groupNames = computed(() => {
-        return adminGroups.value.map(it => it.groupName)
+        return adminGroups.value.map((it) => it.groupName)
     })
 
     return {

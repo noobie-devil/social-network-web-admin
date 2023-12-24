@@ -14,20 +14,23 @@ const useAuthStore = defineStore('authStore', () => {
     const loggedIn = computed(() => user.value !== null)
 
     const login = async ({ email, password }) => {
-        const { error: err, data: { data } } = await POST(`${path}/login`, {
+        const {
+            error: err,
+            data,
+        } = await POST(`${path}/login`, {
             email,
             password,
         })
 
         if (err) {
             console.log('ERROR')
-            error.value = err.message
-            toastError(err.message)
+            error.value = err
+            toastError(err)
         } else {
             error.value = null
-            user.value = data?.user
-            localStorage.setItem('accessToken', data?.tokens.accessToken)
-            localStorage.setItem('refreshToken', data?.tokens.refreshToken)
+            user.value = data.data?.user
+            localStorage.setItem('accessToken', data.data?.tokens.accessToken)
+            localStorage.setItem('refreshToken', data.data?.tokens.refreshToken)
             localStorage.setItem('user', JSON.stringify(user.value))
         }
     }
@@ -43,24 +46,27 @@ const useAuthStore = defineStore('authStore', () => {
         console.log('auth store running')
         console.log(localStorage.getItem('refreshToken'))
         return await POST(`${path}/refresh-token`, {
-            refreshToken: localStorage.getItem('refreshToken')
+            refreshToken: localStorage.getItem('refreshToken'),
         })
     }
 
     const changeUsername = async (username) => {
         console.log(username)
-        const { error: err, data: { data } } = await PUT(`${path}/${user.value._id}/change-username`, {
-            username
+        const {
+            error: err,
+            data,
+        } = await PUT(`${path}/${user.value._id}/change-username`, {
+            username,
         })
 
         if (err) {
             console.log('ERROR')
-            error.value = err.message
-            toastError(err.message)
+            error.value = err
+            toastError(err)
         } else {
             toastSuccess('Change username successfully!')
             error.value = null
-            user.value = data
+            user.value = data.data
             localStorage.setItem('user', JSON.stringify(user.value))
         }
     }
@@ -68,13 +74,13 @@ const useAuthStore = defineStore('authStore', () => {
     const changePassword = async ({ currentPassword, newPassword }) => {
         const { error: err } = await PUT(`${path}/${user.value._id}/change-password`, {
             currentPassword,
-            newPassword
+            newPassword,
         })
 
         if (err) {
             console.log('ERROR')
-            error.value = err.message
-            toastError(err.message)
+            error.value = err
+            toastError(err)
         } else {
             toastSuccess('Change password successfully!')
         }

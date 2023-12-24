@@ -236,7 +236,7 @@
                 <VForm ref="editForm">
                     <VRow>
                         <VCol cols="12">
-                            <h2>ID: {{ item._id }}</h2>
+                            <h2>Username: {{ item.username }}</h2>
                         </VCol>
                         <VCol cols="12">
                             <VSelect

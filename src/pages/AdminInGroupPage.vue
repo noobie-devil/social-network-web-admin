@@ -1,6 +1,6 @@
 <script setup>
     import { storeToRefs } from 'pinia';
-    import { ref, watch, toRefs } from 'vue';
+    import { ref, watch, toRefs, computed } from 'vue';
 
     import TableWithActions from '@/components/TableWithActions.vue';
     import { translate } from '@/locales/translator.js';
@@ -67,9 +67,7 @@
     };
 
     const addItem = async (item) => {
-        item.group = {};
-        item.group.groupName = group.value.groupName;
-        await adminStore.editItem(item);
+        await adminInGroupStore.addItem(item);
     };
 
     const editItem = async (item) => {
@@ -80,9 +78,14 @@
     };
 
     const openAdd = async () => {
-        adminStore.admins.value = [];
+        adminStore.admins = [];
         searching.value = null;
     };
+
+    const adminsNotInGroup = computed(() => {
+        console.log('updating');
+        return adminStore.admins.filter((admin) => !('group' in admin));
+    });
 </script>
 
 <template>
@@ -116,7 +119,7 @@
                     <VRow>
                         <Vlist>
                             <VListItem
-                                v-for="admin in adminStore.getAdminsNotInGroup"
+                                v-for="admin in adminsNotInGroup"
                                 :key="admin._id"
                                 class="d-flex align-center justify-between w-100"
                             >
@@ -139,7 +142,7 @@
                 <VForm ref="editForm">
                     <VRow>
                         <VCol cols="12">
-                            <h2>ID: {{ item._id }}</h2>
+                            <h2>Username: {{ item.username }}</h2>
                         </VCol>
                         <VCol cols="12">
                             <VSelect

@@ -22,15 +22,20 @@ const useAdminStore = defineStore('adminStore', () => {
             // order: sortBy[0]?.order,
             page: page,
             limit: Math.max(itemsPerPage, 0),
-            search
+            search,
         }
 
-        const { error: err, data: { data: { admins: _admins, totalCount } } } = await GET(path, { params })
+        const {
+            error: err,
+            data: {
+                data: { admins: _admins, totalCount },
+            },
+        } = await GET(path, { params })
         console.log(_admins)
 
         if (err) {
-            error.value = err.message
-            toastError(err.message)
+            error.value = err
+            toastError(err)
         } else {
             error.value = null
             admins.value = _admins
@@ -42,17 +47,20 @@ const useAdminStore = defineStore('adminStore', () => {
 
     const addItem = async (item) => {
         loading.value = true
-        const { error: err, data: { data } } = await POST(path, item)
+        const {
+            error: err,
+            data,
+        } = await POST(path, item)
 
         if (err) {
-            error.value = err.message
-            toastError(err.message)
+            error.value = err
+            toastError(err)
         } else {
             toastSuccess('Create new admin successfully')
             error.value = null
-            admins.value.unshift(data)
+            admins.value.unshift(data.data)
             totalItems.value++
-            await adminActivityStore.addItem({ activityType: 'Add new admin', targetId: data._id })
+            await adminActivityStore.addItem({ activityType: 'Add new admin', targetId: data.data._id })
         }
 
         loading.value = false
@@ -61,12 +69,12 @@ const useAdminStore = defineStore('adminStore', () => {
     const editItem = async (item) => {
         loading.value = true
         const { error: err, data } = await PUT(`${path}/${item._id}`, {
-            groupName: item.group.groupName
+            groupName: item.group.groupName,
         })
 
         if (err) {
-            error.value = err.message
-            toastError(err.message)
+            error.value = err
+            toastError(err)
         } else {
             toastSuccess('Edit admin successfully')
             error.value = null
@@ -89,8 +97,8 @@ const useAdminStore = defineStore('adminStore', () => {
         const { error: err } = await DELETE(`${path}/${item._id}`)
 
         if (err) {
-            error.value = err.message
-            toastError(err.message)
+            error.value = err
+            toastError(err)
         } else {
             toastSuccess('Delete admin successfully')
             error.value = null
@@ -102,11 +110,6 @@ const useAdminStore = defineStore('adminStore', () => {
         loading.value = false
     }
 
-    const getAdminsNotInGroup = computed(() => {
-        console.log('updating')
-        return admins.value.filter(admin => !('group' in admin))
-    })
-
     return {
         admins,
         error,
@@ -117,7 +120,6 @@ const useAdminStore = defineStore('adminStore', () => {
         editItem,
         deleteItem,
         deleteItems,
-        getAdminsNotInGroup
     }
 })
 

@@ -26,8 +26,8 @@ const auditPostStore = defineStore('auditPostStore', () => {
         const { error: err, data, totalCount } = await GET(`${path}?status=pending`, { params })
 
         if (err) {
-            error.value = err.message
-            toastError(err.message)
+            error.value = err
+            toastError(err)
         } else {
             error.value = null
             auditPosts.value = data
@@ -48,8 +48,8 @@ const auditPostStore = defineStore('auditPostStore', () => {
         const { error: err } = await DELETE(`${path}/${item.id}`)
 
         if (err) {
-            error.value = err.message
-            toastError(err.message)
+            error.value = err
+            toastError(err)
         } else {
             toastSuccess('Delete audit post successfully')
             error.value = null

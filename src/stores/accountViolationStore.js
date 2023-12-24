@@ -27,8 +27,8 @@ const useAccountViolationStore = defineStore('accountViolation', () => {
         const { error: err, data, totalCount } = await GET(`${path}?status=pending`, { params })
 
         if (err) {
-            error.value = err.message
-            toastError(err.message)
+            error.value = err
+            toastError(err)
         } else {
             error.value = null
             violationAccounts.value = data
@@ -45,8 +45,8 @@ const useAccountViolationStore = defineStore('accountViolation', () => {
         })
 
         if (err) {
-            error.value = err.message
-            toastError(err.message)
+            error.value = err
+            toastError(err)
         } else {
             toastSuccess('Approve report successfully')
             error.value = null
@@ -65,8 +65,8 @@ const useAccountViolationStore = defineStore('accountViolation', () => {
         })
 
         if (err) {
-            error.value = err.message
-            toastError(err.message)
+            error.value = err
+            toastError(err)
         } else {
             toastSuccess('Decline report successfully')
             error.value = null
@@ -89,8 +89,8 @@ const useAccountViolationStore = defineStore('accountViolation', () => {
         const { error: err } = await DELETE(`${path}/${item.id}`)
 
         if (err) {
-            error.value = err.message
-            toastError(err.message)
+            error.value = err
+            toastError(err)
         } else {
             error.value = null
             violationAccounts.value = violationAccounts.value.filter((it) => it.id !== item.id)

@@ -15,7 +15,7 @@ export const GET = async (path, options = {}) => {
         const data = await res.data
         return { error: null, data: data }
     } catch (error) {
-        return { error, data: null }
+        return { error: error.response.data.error, data: null }
     }
 }
 
@@ -25,7 +25,7 @@ export const POST = async (path, options = {}) => {
         const data = await (await axios.post(path, options)).data
         return { error: null, data }
     } catch (error) {
-        return { error, data: null }
+        return { error: error.response.data.error, data: null }
     }
 }
 
@@ -34,9 +34,12 @@ export const DELETE = async (path, options = {}) => {
         console.log(`DELETE ${path}`, options)
         const res = await axios.delete(path, options)
         const data = await res.data
+        console.log('HERE MY DATA' + data)
         return { error: null, data: data }
     } catch (error) {
-        return { error, data: null }
+        console.log('HERE MY error' + error)
+        console.log(error)
+        return { error: error.response.data.error, data: null }
     }
 }
 
@@ -47,7 +50,7 @@ export const PUT = async (path, options = {}) => {
         const data = await res.data
         return { error: null, data: data }
     } catch (error) {
-        return { error, data: null }
+        return { error: error.response.data.error, data: null }
     }
 }
 
@@ -58,7 +61,7 @@ export const PATCH = async (path, options = {}) => {
         const data = await res.data
         return { error: null, data: data }
     } catch (error) {
-        return { error, data: null }
+        return { error: error.response.data.error, data: null }
     }
 }
 
@@ -88,7 +91,9 @@ axios.interceptors.response.use(
         console.log(error)
         if (error.response.status === 403 && error.response?.data?.error.includes('Token expired')) {
             console.log('refreshing token...')
-            const { data: { accessToken, refreshToken } } = await store.refreshToken()
+            const {
+                data: { accessToken, refreshToken },
+            } = await store.refreshToken()
             console.log(accessToken)
             console.log(refreshToken)
             localStorage.setItem('accessToken', accessToken)

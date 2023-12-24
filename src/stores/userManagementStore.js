@@ -32,15 +32,11 @@ const useUserManagementStore = defineStore('userManagementStore', () => {
             q: search,
         }
 
-        const {
-            error: err,
-            data,
-            totalCount,
-        } = await GET(`${path}?${query.value}`, { params })
+        const { error: err, data, totalCount } = await GET(`${path}?${query.value}`, { params })
 
         if (err) {
-            error.value = err.message
-            toastError(err.message)
+            error.value = err
+            toastError(err)
         } else {
             error.value = null
             users.value = data
@@ -58,8 +54,8 @@ const useUserManagementStore = defineStore('userManagementStore', () => {
         })
 
         if (err) {
-            error.value = err.message
-            toastError(err.message)
+            error.value = err
+            toastError(err)
         } else {
             toastSuccess('Create new user successfully')
             users.value.unshift(data.user)
@@ -75,8 +71,8 @@ const useUserManagementStore = defineStore('userManagementStore', () => {
         const { error: err, data } = await PATCH(`${path}/${item.id}`, item)
 
         if (err) {
-            error.value = err.message
-            toastError(err.message)
+            error.value = err
+            toastError(err)
         } else {
             toastSuccess('Edit user successfully')
             error.value = null
@@ -99,8 +95,8 @@ const useUserManagementStore = defineStore('userManagementStore', () => {
         const { error: err } = await DELETE(`${path}/${item.id}`)
 
         if (err) {
-            error.value = err.message
-            toastError(err.message)
+            error.value = err
+            toastError(err)
         } else {
             toastSuccess('Delete user successfully')
             error.value = null

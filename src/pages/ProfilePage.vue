@@ -36,7 +36,7 @@
                     class="mb-2"
                     :label="translate('group')"
                     readonly
-                    v-model.trim="user.group.groupName"
+                    :model-value="user?.group?.groupName"
                     hide-details
                 />
                 <VTextField

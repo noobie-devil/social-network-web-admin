@@ -23,8 +23,8 @@ const useAdminActivityStore = defineStore('adminActivityStore', () => {
         loading.value = true
         const { error: err, data } = await GET(path, { params })
         if (err) {
-            error.value = err.message
-            toastError(err.message)
+            error.value = err
+            toastError(err)
         } else {
             error.value = null
             activities.value = data
@@ -39,8 +39,8 @@ const useAdminActivityStore = defineStore('adminActivityStore', () => {
             targetId,
             admin: {
                 id: authStore.user.id,
-                email: authStore.user.email
-            }
+                email: authStore.user.email,
+            },
         })
     }
 

@@ -1,24 +1,24 @@
-import { describe, it, beforeEach, expect } from 'vitest'
-import { createPinia, setActivePinia } from 'pinia'
+import { describe, it, beforeEach, expect } from 'vitest';
+import { createPinia, setActivePinia } from 'pinia';
 
-import useSidebarStore from '@/stores/sidebarStore'
+import useSidebarStore from '@/stores/sidebarStore';
 
 describe('sidebarStore', () => {
     beforeEach(() => {
-        setActivePinia(createPinia())
-    })
+        setActivePinia(createPinia());
+    });
 
     it('should hide sidebar by default', () => {
-        const store = useSidebarStore()
+        const store = useSidebarStore();
 
-        expect(store.isShowingSidebar).toBeFalsy()
-    })
+        expect(store.isShowingSidebar).toBeFalsy();
+    });
 
     it('should show sidebar when toggle', () => {
-        const store = useSidebarStore()
+        const store = useSidebarStore();
 
-        store.toggleSidebar()
+        store.toggleSidebar();
 
-        expect(store.isShowingSidebar).toBeTruthy()
-    })
-})
+        expect(store.isShowingSidebar).toBeTruthy();
+    });
+});

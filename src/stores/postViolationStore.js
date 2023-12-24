@@ -26,8 +26,8 @@ const usePostViolationStore = defineStore('postViolationStore', () => {
         const { error: err, data, totalCount } = await GET(`${path}?status=pending`, { params })
 
         if (err) {
-            error.value = err.message
-            toastError(err.message)
+            error.value = err
+            toastError(err)
         } else {
             error.value = null
             violationPosts.value = data
@@ -44,8 +44,8 @@ const usePostViolationStore = defineStore('postViolationStore', () => {
         })
 
         if (err) {
-            error.value = err.message
-            toastError(err.message)
+            error.value = err
+            toastError(err)
         } else {
             toastSuccess('Approve report successfully')
             error.value = null
@@ -64,8 +64,8 @@ const usePostViolationStore = defineStore('postViolationStore', () => {
         })
 
         if (err) {
-            error.value = err.message
-            toastError(err.message)
+            error.value = err
+            toastError(err)
         } else {
             toastSuccess('Decline report successfully')
             error.value = null
@@ -88,8 +88,8 @@ const usePostViolationStore = defineStore('postViolationStore', () => {
         const { error: err } = await DELETE(`${path}/${item.id}`)
 
         if (err) {
-            error.value = err.message
-            toastError(err.message)
+            error.value = err
+            toastError(err)
         } else {
             error.value = null
             violationPosts.value = violationPosts.value.filter((it) => it.id !== item.id)

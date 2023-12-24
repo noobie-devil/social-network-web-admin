@@ -1,25 +1,25 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory } from 'vue-router';
 
-import MainLayout from '@/layouts/MainLayout.vue'
-import NavbarLayout from '@/layouts/NavbarLayout.vue'
-import EmptyLayout from '@/layouts/EmptyLayout.vue'
+import MainLayout from '@/layouts/MainLayout.vue';
+import NavbarLayout from '@/layouts/NavbarLayout.vue';
+import EmptyLayout from '@/layouts/EmptyLayout.vue';
 
-import useAuthStore from '@/stores/authStore.js'
-import DashboardPage from '@/pages/DashboardPage.vue'
-import LoginPage from '@/pages/LoginPage.vue'
-import NotFoundPage from '@/pages/NotFoundPage.vue'
-import UserManagementPage from '@/pages/UserManagementPage.vue'
-import SchoolYearManagementPage from '@/pages/SchoolYearManagementPage.vue'
-import FacultyPage from '@/pages/FacultyPage.vue'
-import AdminGroupPage from '@/pages/AdminGroupPage.vue'
-import AuditPostPage from '@/pages/AuditPostPage.vue'
-import AuditAccountPage from '@/pages/AuditAccountPage.vue'
-import PostViolationPage from '@/pages/PostViolationPage.vue'
-import AccountViolationPage from '@/pages/AccountViolationPage.vue'
-import AdminManagementPage from '@/pages/AdminManagementPage.vue'
-import ProfilePage from '@/pages/ProfilePage.vue'
-import ChangePasswordPage from '@/pages/ChangePasswordPage.vue'
-import ResourceManagementPage from '@/pages/ResourceManagementPage.vue'
+import useAuthStore from '@/stores/authStore.js';
+import DashboardPage from '@/pages/DashboardPage.vue';
+import LoginPage from '@/pages/LoginPage.vue';
+import NotFoundPage from '@/pages/NotFoundPage.vue';
+import UserManagementPage from '@/pages/UserManagementPage.vue';
+import SchoolYearManagementPage from '@/pages/SchoolYearManagementPage.vue';
+import FacultyPage from '@/pages/FacultyPage.vue';
+import AdminGroupPage from '@/pages/AdminGroupPage.vue';
+import AuditPostPage from '@/pages/AuditPostPage.vue';
+import AuditAccountPage from '@/pages/AuditAccountPage.vue';
+import PostViolationPage from '@/pages/PostViolationPage.vue';
+import AccountViolationPage from '@/pages/AccountViolationPage.vue';
+import AdminManagementPage from '@/pages/AdminManagementPage.vue';
+import ProfilePage from '@/pages/ProfilePage.vue';
+import ChangePasswordPage from '@/pages/ChangePasswordPage.vue';
+import ResourceManagementPage from '@/pages/ResourceManagementPage.vue';
 
 const mainSidebarItems = [
     { title: 'dashboard', activeValue: 'dashboard', icon: 'mdi-home', route: 'dashboard' },
@@ -76,13 +76,13 @@ const mainSidebarItems = [
         icon: 'mdi-account-alert',
         route: 'reportAccount',
     },
-]
+];
 
 const profileSidebarItems = [
     { title: 'profile', activeValue: 'profile', icon: 'mdi-account', route: 'profile' },
     { header: 'modify' },
     { title: 'changePassword', activeValue: 'change-password', icon: 'mdi-onepassword', route: 'changePassword' },
-]
+];
 
 export const routes = [
     {
@@ -99,7 +99,7 @@ export const routes = [
         component: DashboardPage,
         meta: {
             layout: MainLayout,
-            sidebarItems: mainSidebarItems
+            sidebarItems: mainSidebarItems,
         },
     },
     {
@@ -108,7 +108,7 @@ export const routes = [
         component: ResourceManagementPage,
         meta: {
             layout: MainLayout,
-            sidebarItems: mainSidebarItems
+            sidebarItems: mainSidebarItems,
         },
     },
     {
@@ -117,7 +117,7 @@ export const routes = [
         component: UserManagementPage,
         meta: {
             layout: MainLayout,
-            sidebarItems: mainSidebarItems
+            sidebarItems: mainSidebarItems,
         },
     },
     {
@@ -126,7 +126,7 @@ export const routes = [
         component: SchoolYearManagementPage,
         meta: {
             layout: MainLayout,
-            sidebarItems: mainSidebarItems
+            sidebarItems: mainSidebarItems,
         },
     },
     {
@@ -135,7 +135,7 @@ export const routes = [
         component: FacultyPage,
         meta: {
             layout: MainLayout,
-            sidebarItems: mainSidebarItems
+            sidebarItems: mainSidebarItems,
         },
     },
     {
@@ -144,7 +144,7 @@ export const routes = [
         component: AdminGroupPage,
         meta: {
             layout: MainLayout,
-            sidebarItems: mainSidebarItems
+            sidebarItems: mainSidebarItems,
         },
     },
     {
@@ -153,7 +153,7 @@ export const routes = [
         component: AdminManagementPage,
         meta: {
             layout: MainLayout,
-            sidebarItems: mainSidebarItems
+            sidebarItems: mainSidebarItems,
         },
     },
     {
@@ -162,7 +162,7 @@ export const routes = [
         component: AuditPostPage,
         meta: {
             layout: MainLayout,
-            sidebarItems: mainSidebarItems
+            sidebarItems: mainSidebarItems,
         },
     },
     {
@@ -171,7 +171,7 @@ export const routes = [
         component: AuditAccountPage,
         meta: {
             layout: MainLayout,
-            sidebarItems: mainSidebarItems
+            sidebarItems: mainSidebarItems,
         },
     },
     {
@@ -180,7 +180,7 @@ export const routes = [
         component: PostViolationPage,
         meta: {
             layout: MainLayout,
-            sidebarItems: mainSidebarItems
+            sidebarItems: mainSidebarItems,
         },
     },
     {
@@ -189,7 +189,7 @@ export const routes = [
         component: AccountViolationPage,
         meta: {
             layout: MainLayout,
-            sidebarItems: mainSidebarItems
+            sidebarItems: mainSidebarItems,
         },
     },
     {
@@ -198,7 +198,7 @@ export const routes = [
         component: ProfilePage,
         meta: {
             layout: MainLayout,
-            sidebarItems: profileSidebarItems
+            sidebarItems: profileSidebarItems,
         },
     },
     {
@@ -207,7 +207,7 @@ export const routes = [
         component: ChangePasswordPage,
         meta: {
             layout: MainLayout,
-            sidebarItems: profileSidebarItems
+            sidebarItems: profileSidebarItems,
         },
     },
     {
@@ -218,25 +218,25 @@ export const routes = [
             layout: NavbarLayout,
         },
     },
-]
+];
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
     scrollBehavior: () => {
-        return { top: 0 }
+        return { top: 0 };
     },
-    routes
-})
+    routes,
+});
 router.beforeEach((to, from, next) => {
-    const store = useAuthStore()
+    const store = useAuthStore();
 
     if (store.loggedIn && to.name === 'login') {
-        next({ name: 'dashboard' })
+        next({ name: 'dashboard' });
     } else if (!store.loggedIn && to.name !== 'login') {
-        next({ name: 'login' })
+        next({ name: 'login' });
     } else {
-        next()
+        next();
     }
-})
+});
 
-export default router
+export default router;

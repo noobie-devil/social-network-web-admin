@@ -1,8 +1,7 @@
-import { createI18n } from 'vue-i18n'
+import { createI18n } from 'vue-i18n';
 
-import en from './en.json'
-import vn from './vn.json'
-
+import en from './en.json';
+import vn from './vn.json';
 
 const translator = createI18n({
     legacy: false,
@@ -12,15 +11,15 @@ const translator = createI18n({
         en,
         vn,
     },
-})
+});
 
 export const changeLanguage = (code) => {
-    translator.global.locale.value = code
-    localStorage.setItem('lang', code)
-}
+    translator.global.locale.value = code;
+    localStorage.setItem('lang', code);
+};
 
 export const translate = (key) => {
-    return translator.global.t(key)
-}
+    return translator.global.t(key);
+};
 
-export default translator
+export default translator;

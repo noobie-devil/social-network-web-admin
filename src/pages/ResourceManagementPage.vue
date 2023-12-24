@@ -9,15 +9,18 @@
     import DatePickerMenu from '@/components/DatePickerMenu.vue';
     import { basicRules } from '@/utils/validation.js';
     import useFilterStore from '@/stores/filterStore';
+    import ResourcePermissionPage from './ResourcePermissionPage.vue';
 
     const resourceStore = useResourceStore();
     const { resources, totalItems, loading } = storeToRefs(resourceStore);
 
     const name = ref(null);
-    const startYear = ref(null);
+    const selectedPermissions = ref([]);
+    const editSelectedPermissions = ref([]);
     const addForm = ref(null);
     const editForm = ref(null);
     const formRules = ref(basicRules);
+    const resource = ref(null);
 
     const filterStore = useFilterStore();
     filterStore.setFilters([]);
@@ -29,13 +32,18 @@
             align: 'center',
         },
         {
-            key: 'name',
-            title: translate('name'),
+            key: 'resourceName',
+            title: translate('resourceName'),
             align: 'center',
         },
         {
-            key: 'startYear',
-            title: translate('startYear'),
+            key: 'othersPermission',
+            title: translate('publicPermission'),
+            align: 'center',
+        },
+        {
+            key: 'updatedBy.username',
+            title: translate('updatedBy'),
             align: 'center',
         },
         {
@@ -46,21 +54,40 @@
         },
     ];
 
+    const operations = {
+        1: ['1'],
+        2: ['2'],
+        3: ['1', '2'],
+        4: ['4'],
+        5: ['4', '1'],
+        6: ['4', '2'],
+        7: ['1', '2', '4'],
+    };
+
     const addItem = async () => {
         if ((await addForm.value.validate()).valid) {
             await resourceStore.addItem({
-                name: name.value,
-                startYear: +startYear.value,
+                resourceName: name.value,
+                othersPermission: selectedPermissions.value.reduce((a, b) => +a + +b, 0),
             });
             name.value = '';
-            startYear.value = null;
+            selectedPermissions.value = [];
         }
     };
 
     const editItem = async (item) => {
         if ((await editForm.value.validate()).valid) {
-            await resourceStore.editItem(item);
+            await resourceStore.editItem({
+                _id: item._id,
+                resourceName: item.name,
+                othersPermission: editSelectedPermissions.value.reduce((a, b) => +a + +b, 0),
+            });
         }
+    };
+
+    const openEdit = async (item) => {
+        editSelectedPermissions.value = [];
+        editSelectedPermissions.value = operations[item.othersPermission];
     };
 </script>
 
@@ -75,6 +102,10 @@
         @deleteItems="resourceStore.deleteItems"
         @editItem="editItem"
         @update-options="resourceStore.getItems"
+        @openEdit="openEdit"
+        @clickRow="(it) => (resource = it)"
+        showModalOnClickRow
+        hideModalActions
     >
         <template #add>
             <VContainer>
@@ -88,8 +119,10 @@
                                 :rules="formRules"
                             ></VTextField>
                         </VCol>
-                        <VCol cols="12" md="6">
-                            <VTextField v-model.trim="startYear" :label="translate('startYear')"></VTextField>
+                        <VCol cols="12">
+                            <VCheckbox v-model="selectedPermissions" value="4" label="Get"></VCheckbox>
+                            <VCheckbox v-model="selectedPermissions" value="2" label="Create"></VCheckbox>
+                            <VCheckbox v-model="selectedPermissions" value="1" label="Update"></VCheckbox>
                         </VCol>
                     </VRow>
                 </VForm>
@@ -99,23 +132,27 @@
         <template #edit="{ item }">
             <VContainer>
                 <VForm ref="editForm">
-                    <h2>ID: {{ item._id }}</h2>
                     <VRow class="justify-center align-center">
                         <VCol cols="12">
                             <VTextField
                                 class="my-3"
                                 :label="translate('name')"
-                                hide-details
-                                v-model.trim="item.name"
+                                v-model.trim="item.resourceName"
                                 :rules="formRules"
                             ></VTextField>
                         </VCol>
-                        <VCol cols="12" md="6">
-                            <VTextField v-model.trim="item.startYear" :label="translate('startYear')"></VTextField>
+                        <VCol cols="12">
+                            <VCheckbox v-model="editSelectedPermissions" value="4" label="Get"></VCheckbox>
+                            <VCheckbox v-model="editSelectedPermissions" value="2" label="Create"></VCheckbox>
+                            <VCheckbox v-model="editSelectedPermissions" value="1" label="Update"></VCheckbox>
                         </VCol>
                     </VRow>
                 </VForm>
             </VContainer>
+        </template>
+
+        <template #modal>
+            <ResourcePermissionPage :resource="resource" />
         </template>
     </TableWithActions>
 </template>

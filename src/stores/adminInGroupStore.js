@@ -22,14 +22,19 @@ const useAdminInGroupStore = defineStore('adminInGroupStore', () => {
             // _order: sortBy[0].order,
             page: page,
             limit: Math.max(itemsPerPage, 0),
-            search
+            search,
         }
 
-        const { error: err, data: { data: { admins: _admins, totalCount } } } = await GET(`/aauth/admin?group=${group.value}`, { params })
+        const {
+            error: err,
+            data: {
+                data: { admins: _admins, totalCount },
+            },
+        } = await GET(`/aauth/admin?group=${group.value}`, { params })
 
         if (err) {
-            error.value = err.message
-            toastError(err.message)
+            error.value = err
+            toastError(err)
         } else {
             error.value = null
             admins.value = _admins
@@ -42,12 +47,12 @@ const useAdminInGroupStore = defineStore('adminInGroupStore', () => {
     const addItem = async (item) => {
         loading.value = true
         const { error: err, data } = await POST(`${path}/${group.value}/admins`, {
-            adminId: item._id
+            adminId: item._id,
         })
 
         if (err) {
-            error.value = err.message
-            toastError(err.message)
+            error.value = err
+            toastError(err)
         } else {
             toastSuccess('Add new admin to group successfully')
             error.value = null
@@ -61,12 +66,12 @@ const useAdminInGroupStore = defineStore('adminInGroupStore', () => {
     const editItem = async (item) => {
         loading.value = true
         const { error: err, data } = await PUT(`/aauth/admin/${item._id}`, {
-            groupName: item.group.groupName
+            groupName: item.group.groupName,
         })
 
         if (err) {
-            error.value = err.message
-            toastError(err.message)
+            error.value = err
+            toastError(err)
         } else {
             toastSuccess('Edit admin from group successfully')
             error.value = null
@@ -91,13 +96,13 @@ const useAdminInGroupStore = defineStore('adminInGroupStore', () => {
         loading.value = true
         const { error: err } = await DELETE(`${path}/${group.value}/admins`, {
             data: {
-                adminId: item._id
-            }
+                adminId: item._id,
+            },
         })
 
         if (err) {
-            error.value = err.message
-            toastError(err.message)
+            error.value = err
+            toastError(err)
         } else {
             toastSuccess('Delete admin from group successfully')
             error.value = null

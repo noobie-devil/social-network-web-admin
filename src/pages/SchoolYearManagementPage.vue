@@ -88,7 +88,7 @@
                                 :rules="formRules"
                             ></VTextField>
                         </VCol>
-                        <VCol cols="12" md="6">
+                        <VCol cols="12">
                             <VTextField v-model.trim="startYear" :label="translate('startYear')"></VTextField>
                         </VCol>
                     </VRow>
@@ -99,7 +99,6 @@
         <template #edit="{ item }">
             <VContainer>
                 <VForm ref="editForm">
-                    <h2>ID: {{ item._id }}</h2>
                     <VRow class="justify-center align-center">
                         <VCol cols="12">
                             <VTextField

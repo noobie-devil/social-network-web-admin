@@ -141,5 +141,10 @@
     "updatedAt": "Updated at",
     "currentPassword": "Current password",
     "newPassword": "New password",
-    "confirmNewPassword": "Confirm new password"
+    "confirmNewPassword": "Confirm new password",
+    "resourceName": "Resource name",
+    "publicPermission": "Public permission",
+    "updatedBy": "Updated by",
+    "resource": "Resource",
+    "operation": "Operation"
 }

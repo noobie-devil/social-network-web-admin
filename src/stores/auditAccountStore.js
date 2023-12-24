@@ -27,8 +27,8 @@ const auditAccountStore = defineStore('auditAccountStore', () => {
         const { error: err, data, totalCount } = await GET(`${path}?status=pending`, { params })
 
         if (err) {
-            error.value = err.message
-            toastError(err.message)
+            error.value = err
+            toastError(err)
         } else {
             error.value = null
             auditAccounts.value = data
@@ -45,8 +45,8 @@ const auditAccountStore = defineStore('auditAccountStore', () => {
         })
 
         if (err) {
-            error.value = err.message
-            toastError(err.message)
+            error.value = err
+            toastError(err)
         } else {
             toastSuccess('Approve account successfully')
             error.value = null
@@ -65,8 +65,8 @@ const auditAccountStore = defineStore('auditAccountStore', () => {
         })
 
         if (err) {
-            error.value = err.message
-            toastError(err.message)
+            error.value = err
+            toastError(err)
         } else {
             toastSuccess('Decline account successfully')
             error.value = null
@@ -89,8 +89,8 @@ const auditAccountStore = defineStore('auditAccountStore', () => {
         const { error: err } = await DELETE(`${path}/${item.id}`)
 
         if (err) {
-            error.value = err.message
-            toastError(err.message)
+            error.value = err
+            toastError(err)
         } else {
             toastSuccess('Delete audit account successfully')
             error.value = null

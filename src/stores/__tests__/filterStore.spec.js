@@ -1,7 +1,7 @@
-import { describe, it, beforeEach, expect } from 'vitest'
-import { createPinia, setActivePinia } from 'pinia'
+import { describe, it, beforeEach, expect } from 'vitest';
+import { createPinia, setActivePinia } from 'pinia';
 
-import useFilterStore from '@/stores/filterStore'
+import useFilterStore from '@/stores/filterStore';
 
 const filters = [
     {
@@ -40,66 +40,66 @@ const filters = [
         value: [0, 100],
         type: 'range',
     },
-]
+];
 
 describe('filterStore', () => {
     beforeEach(() => {
-        setActivePinia(createPinia())
-    })
+        setActivePinia(createPinia());
+    });
 
     it('should hide filter sidebar by default', () => {
-        const store = useFilterStore()
+        const store = useFilterStore();
 
-        expect(store.showingFilter).toBeFalsy()
-    })
+        expect(store.showingFilter).toBeFalsy();
+    });
 
     it('should show filter sidebar when toggle', () => {
-        const store = useFilterStore()
+        const store = useFilterStore();
 
-        store.toggleFilter()
+        store.toggleFilter();
 
-        expect(store.showingFilter).toBeTruthy()
-    })
+        expect(store.showingFilter).toBeTruthy();
+    });
 
     it('should create a correct map for selected filter', () => {
-        const store = useFilterStore()
+        const store = useFilterStore();
 
-        store.setFilters(filters)
+        store.setFilters(filters);
 
         expect(store.map).toMatchObject({
             type: [],
             faculty: [],
-            status: new String,
+            status: new String(),
             gender: [],
             hometown: [],
-            yearOfBirth: []
-        })
-    })
+            yearOfBirth: [],
+        });
+    });
 
     it('should return empty query by default', () => {
-        const store = useFilterStore()
+        const store = useFilterStore();
 
-        store.setFilters(filters)
+        store.setFilters(filters);
 
-        expect(store.query).toEqual('')
-    })
+        expect(store.query).toEqual('');
+    });
 
     it('should return the exact query as the selected filter', () => {
-        const store = useFilterStore()
+        const store = useFilterStore();
 
-        store.setFilters(filters)
-        store.setSelected('gender', ['male'])
-        store.setSelected('status', 'active')
-        store.setSelected('hometown', ['Ho Chi Minh', 'Quang Nam'])
-        store.setSelected('yearOfBirth', [60, 90])
-        store.setSelected('gender', ['male', 'female'])
+        store.setFilters(filters);
+        store.setSelected('gender', ['male']);
+        store.setSelected('status', 'active');
+        store.setSelected('hometown', ['Ho Chi Minh', 'Quang Nam']);
+        store.setSelected('yearOfBirth', [60, 90]);
+        store.setSelected('gender', ['male', 'female']);
 
-        expect(store.query).toContain('gender=male')
-        expect(store.query).toContain('status=active')
-        expect(store.query).toContain('hometown=Ho Chi Minh')
-        expect(store.query).toContain('hometown=Quang Nam')
-        expect(store.query).toContain('yearOfBirth_gte=60')
-        expect(store.query).toContain('yearOfBirth_lte=90')
-        expect(store.query).toContain('gender=female')
-    })
-})
+        expect(store.query).toContain('gender=male');
+        expect(store.query).toContain('status=active');
+        expect(store.query).toContain('hometown=Ho Chi Minh');
+        expect(store.query).toContain('hometown=Quang Nam');
+        expect(store.query).toContain('yearOfBirth_gte=60');
+        expect(store.query).toContain('yearOfBirth_lte=90');
+        expect(store.query).toContain('gender=female');
+    });
+});

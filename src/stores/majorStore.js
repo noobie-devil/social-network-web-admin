@@ -22,14 +22,19 @@ const majorStore = defineStore('majorStore', () => {
             // _order: sortBy[0].order,
             page: page,
             limit: Math.max(itemsPerPage, 0),
-            search
+            search,
         }
 
-        const { error: err, data: { data: { majors: _majors, totalCount } } } = await GET(`${path}?facultyId=${faculty.value}`, { params })
+        const {
+            error: err,
+            data: {
+                data: { majors: _majors, totalCount },
+            },
+        } = await GET(`${path}?facultyId=${faculty.value}`, { params })
 
         if (err) {
-            error.value = err.message
-            toastError(err.message)
+            error.value = err
+            toastError(err)
         } else {
             error.value = null
             majors.value = _majors
@@ -47,8 +52,8 @@ const majorStore = defineStore('majorStore', () => {
         })
 
         if (err) {
-            error.value = err.message
-            toastError(err.message)
+            error.value = err
+            toastError(err)
         } else {
             toastSuccess('Create new major successfully')
             error.value = null
@@ -68,8 +73,8 @@ const majorStore = defineStore('majorStore', () => {
         })
 
         if (err) {
-            error.value = err.message
-            toastError(err.message)
+            error.value = err
+            toastError(err)
         } else {
             toastSuccess('Edit major successfully')
             error.value = null
@@ -92,8 +97,8 @@ const majorStore = defineStore('majorStore', () => {
         const { error: err } = await DELETE(`${path}/${item._id}`)
 
         if (err) {
-            error.value = err.message
-            toastError(err.message)
+            error.value = err
+            toastError(err)
         } else {
             toastSuccess('Delete major successfully')
             error.value = null
@@ -106,7 +111,7 @@ const majorStore = defineStore('majorStore', () => {
     }
 
     const majorNames = computed(() => {
-        return majors.value.map(it => it.name)
+        return majors.value.map((it) => it.name)
     })
 
     return {

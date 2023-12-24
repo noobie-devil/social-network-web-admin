@@ -141,5 +141,10 @@
     "updatedAt": "Ngày cập nhật",
     "currentPassword": "Mật khẩu hiện tại",
     "newPassword": "Mật khẩu mới",
-    "confirmNewPassword": "Xác nhận lại mật khẩu mới"
+    "confirmNewPassword": "Xác nhận lại mật khẩu mới",
+    "resourceName": "Tên tài nguyên",
+    "publicPermission": "Quyền công khai",
+    "updatedBy": "Cập nhật bởi",
+    "resource": "Tài nguyên",
+    "operation": "Hoạt động"
 }

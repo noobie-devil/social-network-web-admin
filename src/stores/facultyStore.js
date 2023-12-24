@@ -24,12 +24,16 @@ const useFacultyStore = defineStore('facultyStore', () => {
             search,
         }
 
-        const { error: err, data: { data: { faculties: _faculties, totalCount } }
+        const {
+            error: err,
+            data: {
+                data: { faculties: _faculties, totalCount },
+            },
         } = await GET(path, { params })
 
         if (err) {
-            error.value = err.message
-            toastError(err.message)
+            error.value = err
+            toastError(err)
         } else {
             error.value = null
             faculties.value = _faculties
@@ -44,8 +48,8 @@ const useFacultyStore = defineStore('facultyStore', () => {
         const { error: err, data } = await POST(path, item)
 
         if (err) {
-            error.value = err.message
-            toastError(err.message)
+            error.value = err
+            toastError(err)
         } else {
             toastSuccess('Create new faculty successfully')
             error.value = null
@@ -65,8 +69,8 @@ const useFacultyStore = defineStore('facultyStore', () => {
         })
 
         if (err) {
-            error.value = err.message
-            toastError(err.message)
+            error.value = err
+            toastError(err)
         } else {
             toastSuccess('Edit faculty successfully')
             error.value = null
@@ -89,8 +93,8 @@ const useFacultyStore = defineStore('facultyStore', () => {
         const { error: err } = await DELETE(`${path}/${item._id}`)
 
         if (err) {
-            error.value = err.message
-            toastError(err.message)
+            error.value = err
+            toastError(err)
         } else {
             toastSuccess('Delete faculty successfully')
             error.value = null
@@ -103,7 +107,7 @@ const useFacultyStore = defineStore('facultyStore', () => {
     }
 
     const facultyNames = computed(() => {
-        return faculties.value.map(it => it.name)
+        return faculties.value.map((it) => it.name)
     })
 
     return {

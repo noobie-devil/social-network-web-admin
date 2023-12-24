@@ -93,7 +93,7 @@
         <template #edit="{ item }">
             <VContainer>
                 <VForm ref="editForm">
-                    <h2>ID: {{ item._id }}</h2>
+                  <h2>Group name:</h2>
                     <VRow class="justify-center align-center">
                         <VCol cols="12">
                             <VTextField
